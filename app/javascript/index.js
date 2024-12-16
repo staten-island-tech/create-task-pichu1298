@@ -7,42 +7,8 @@ const DomSelectors = {
 };
 const input = document.getElementById("input");
 const submitForm = document.getElementById("removeButton");
-let newItems = [];
-
-submitForm.addEventListener("click", (event) => {
-  event.preventDefault();
-  randomItems.forEach((item) => {
-    if (item.name === input.value) {
-      console.log(input.value);
-      inputNewItems();
-      //show every item that doesn't match input value
-    } else if (item.gender === input.value) {
-      console.log(input.value);
-      inputNewItems();
-    } else if (item.type === input.value) {
-      console.log(input.value);
-      inputNewItems();
-    } else if (item.canBeFound === input.value) {
-      console.log(input.value);
-      inputNewItems();
-    }
-  });
-});
-
-function inputNewItems(item) {
-  newItems = randomItems.filter(item != input.value);
-  newItems.forEach((item) =>
-    DomSelectors.container.insertAdjacentHTML(
-      "beforeend",
-      `<div class = "card" id = "">
-  <h1 class = "name" id = "${item.name}">Name: ${item.name}</h1>
-  <h2 class = "${item.type}">Type: ${item.type}</h2>
-  <h2 class = "${item.gender}">Gender: ${item.gender}</h2>
-  <h2 class = "canBeFound" id = "${item.canBeFound}">Can be found: ${item.canBeFound}</h2>
-  </div>`
-    )
-  );
-}
+const reset = document.getElementById("resetBtn");
+let newItems = [...randomItems];
 
 randomItems.forEach((item) =>
   DomSelectors.container.insertAdjacentHTML(
@@ -55,3 +21,62 @@ randomItems.forEach((item) =>
 </div>`
   )
 );
+
+reset.addEventListener("click", (event) => {
+  console.log("Reset button clicked!");
+  DomSelectors.container.innerHTML = "";
+  event.preventDefault();
+  randomItems.forEach((item) =>
+    DomSelectors.container.insertAdjacentHTML(
+      "beforeend",
+      `<div class = "card" id = "">
+<h1 class = "name" id = "${item.name}">Name: ${item.name}</h1>
+<h2 class = "${item.type}">Type: ${item.type}</h2>
+<h2 class = "${item.gender}">Gender: ${item.gender}</h2>
+<h2 class = "canBeFound" id = "${item.canBeFound}">Can be found: ${item.canBeFound}</h2>
+</div>`
+    )
+  );
+});
+
+submitForm.addEventListener("click", (event) => {
+  event.preventDefault();
+  randomItems.forEach((item) => {
+    if (item.name === input.value) {
+      console.log(input.value);
+      inputNewItems(input.value);
+    } else if (item.gender === input.value) {
+      console.log(input.value);
+      inputNewItems(input.value);
+    } else if (item.type === input.value) {
+      console.log(input.value);
+      inputNewItems(input.value);
+    } else if (item.canBeFound === input.value) {
+      console.log(input.value);
+      inputNewItems(input.value);
+    } else {
+    }
+  });
+});
+
+function inputNewItems(value) {
+  DomSelectors.container.innerHTML = "";
+  newItems = newItems.filter(
+    (item) =>
+      item.name !== value &&
+      item.gender !== value &&
+      item.type !== value &&
+      item.canBeFound !== value
+  );
+  newItems.forEach((item) =>
+    DomSelectors.container.insertAdjacentHTML(
+      "beforeend",
+      `<div class = "card" id = "">
+  <h1 class = "name" id = "${item.name}">Name: ${item.name}</h1>
+  <h2 class = "${item.type}">Type: ${item.type}</h2>
+  <h2 class = "${item.gender}">Gender: ${item.gender}</h2>
+  <h2 class = "canBeFound" id = "${item.canBeFound}">Can be found: ${item.canBeFound}</h2>
+  </div>`
+    )
+  );
+}

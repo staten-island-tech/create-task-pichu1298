@@ -10,3 +10,14 @@ justify-content: center;
     background-color: blue;
     margin: 1%;
 }
+
+form{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+button{
+    margin: 1%;
+}
