@@ -61,33 +61,36 @@ create.arrayConfirm.addEventListener("click", (event) => {
   console.log(submitForm);
   addResetListener();
 });
+createButtonEventListener();
 
-create.button.addEventListener("click", (event) => {
-  console.log("create Button clicked!");
-  event.preventDefault();
-  newArrayBtn = "clicked";
-  newItems = [...newArray];
-  DomSelectors.container.innerHTML = "";
-  document.getElementById("normalForm").innerHTML = "";
-  DomSelectors.createContainer.insertAdjacentHTML(
-    "beforeend",
-    `<div class = "card" id = "">
-  <h1 class = "name" id = "${create.name.value}">Name: ${create.name.value}</h1>
-  <img src="${create.image.value}" alt="">
-  <h2 class = "${create.type.value}">Type: ${create.type.value}</h2>
-  <h2 class = "${create.gender.value}">Gender: ${create.gender.value}</h2>
-  <h2 class = "canBeFound" id = "${create.location.value}">Can be found: ${create.location.value}</h2>
-  </div>`
-  );
-  newArray.push({
-    name: create.name.value,
-    type: create.type.value,
-    gender: create.gender.value,
-    canBeFound: create.location.value,
-    imageUrl: create.image.value,
+function createButtonEventListener() {
+  create.button.addEventListener("click", (event) => {
+    console.log("create Button clicked!");
+    event.preventDefault();
+    newArrayBtn = "clicked";
+    newItems = [...newArray];
+    DomSelectors.container.innerHTML = "";
+    document.getElementById("normalForm").innerHTML = "";
+    DomSelectors.createContainer.insertAdjacentHTML(
+      "beforeend",
+      `<div class = "card" id = "">
+    <h1 class = "name" id = "${create.name.value}">Name: ${create.name.value}</h1>
+    <img src="${create.image.value}" alt="">
+    <h2 class = "${create.type.value}">Type: ${create.type.value}</h2>
+    <h2 class = "${create.gender.value}">Gender: ${create.gender.value}</h2>
+    <h2 class = "canBeFound" id = "${create.location.value}">Can be found: ${create.location.value}</h2>
+    </div>`
+    );
+    newArray.push({
+      name: create.name.value,
+      type: create.type.value,
+      gender: create.gender.value,
+      canBeFound: create.location.value,
+      imageUrl: create.image.value,
+    });
+    console.log(newArray);
   });
-  console.log(newArray);
-});
+}
 
 randomItems.forEach((item) =>
   DomSelectors.container.insertAdjacentHTML(
@@ -147,6 +150,7 @@ submitForm.addEventListener("click", (event) => {
 
 function alogrithm() {
   console.log("click");
+  console.log("array btn" + newArrayBtn);
   if (newArrayBtn === "notClicked") {
     randomItems.forEach((item) => {
       if (item.name === input.value) {
