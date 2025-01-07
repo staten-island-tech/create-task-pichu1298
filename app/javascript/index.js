@@ -47,23 +47,23 @@ function addResetListener() {
 addResetListener();
 submitForm.addEventListener("click", (event) => {
   event.preventDefault();
-  checkItemsAlgorithm();
+  checkItemsAlgorithm(input.value);
 });
 
 //algorithm = check each item and if something is different do something
 
-function checkItemsAlgorithm() {
+function checkItemsAlgorithm(inputValue) {
   for (let i = 0; i < randomItems.length; i++) {
-    if (randomItems[i].name === input.value) {
+    if (randomItems[i].name === inputValue) {
       console.log(input.value);
       inputNewItems(input.value);
-    } else if (randomItems[i].gender === input.value) {
+    } else if (randomItems[i].gender === inputValue) {
       console.log(input.value);
       inputNewItems(input.value);
-    } else if (randomItems[i].type === input.value) {
+    } else if (randomItems[i].type === inputValue) {
       console.log(input.value);
       inputNewItems(input.value);
-    } else if (randomItems[i].canBeFound === input.value) {
+    } else if (randomItems[i].canBeFound === inputValue) {
       console.log(input.value);
       inputNewItems(input.value);
     }

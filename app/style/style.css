@@ -1,20 +1,25 @@
+body{
+background-color: rgb(100,100,100);
+}
+
 .container{
 display: flex;
 flex-wrap: wrap;
 align-items: center;
 justify-content: center;
 }
-.create{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    }
 
 .card{
     width: 30%;
-    background-color: blue;
+    background-color: rgb(20,150,255);
     margin: 1%;
+    border-style:outset;
+    border-radius: 10%;
+}
+h1,
+h2,
+*{
+    text-align: center;
 }
 
 form{
@@ -22,8 +27,16 @@ form{
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    background-color: rgb(20,150,255);
+    border-style: outset;
+    border-radius: 50%;
+}
+
+input{
+    border-radius: 10%;
 }
 
 button{
     margin: 1%;
+    border-radius: 10%;
 }
