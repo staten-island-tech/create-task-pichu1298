@@ -3,14 +3,25 @@ import "../style/style.css";
 
 const DomSelectors = {
   container: document.querySelector(".container"),
+  task: document.querySelector("#Task"),
+  moves: document.querySelector("#moves"),
+  won: document.querySelector("#won"),
 };
 
 const input = document.getElementById("input");
 let submitForm = document.getElementById("removeButton");
 let reset = document.getElementById("resetBtn");
+let isLostPrior = false;
+
+let targetItem =
+  randomItems[Math.floor(Math.random() * randomItems.length)].name;
 
 let newItems = [...randomItems];
+let numberOfMoves = 0;
 
+DomSelectors.task.textContent = `Get ${targetItem} remaining on your screen!`;
+DomSelectors.moves.textContent = `You took ${numberOfMoves} moves so far!`;
+DomSelectors.won.textContent = "";
 randomItems.forEach((item) =>
   DomSelectors.container.insertAdjacentHTML(
     "beforeend",
@@ -30,6 +41,10 @@ function addResetListener() {
     console.log("Reset button clicked!");
     DomSelectors.container.innerHTML = "";
     newItems = [...randomItems];
+    numberOfMoves = 0;
+    targetItem =
+      randomItems[Math.floor(Math.random() * randomItems.length)].name;
+
     randomItems.forEach((item) =>
       DomSelectors.container.insertAdjacentHTML(
         "beforeend",
@@ -47,6 +62,8 @@ function addResetListener() {
 addResetListener();
 submitForm.addEventListener("click", (event) => {
   event.preventDefault();
+  numberOfMoves++;
+  DomSelectors.moves.textContent = `You took ${numberOfMoves} moves so far!`;
   checkItemsAlgorithm(input.value);
 });
 
@@ -91,4 +108,22 @@ function inputNewItems(value) {
     </div>`
     )
   );
+  gotItem();
+}
+
+function gotItem() {
+  if (newItems[0].name === targetItem && newItems.length === 1) {
+    console.log("WON!!!");
+    input.remove();
+    submitForm.remove();
+    DomSelectors.moves.textContent = "";
+    DomSelectors.won.textContent = `You won in ${numberOfMoves} moves! Want to try again?`;
+  } else if (newItems.every((item) => item.name !== targetItem)) {
+    console.log("ITEM LOST");
+    input.remove();
+    submitForm.remove();
+    DomSelectors.moves.textContent = "";
+    DomSelectors.won.textContent = `You lost in ${numberOfMoves} move(s)! Want to try again?`;
+    isLostPrior = true;
+  }
 }
