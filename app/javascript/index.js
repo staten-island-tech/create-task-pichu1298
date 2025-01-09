@@ -6,9 +6,10 @@ const DomSelectors = {
   task: document.querySelector("#Task"),
   moves: document.querySelector("#moves"),
   won: document.querySelector("#won"),
+  form: document.querySelector("#normalForm"),
 };
 
-const input = document.getElementById("input");
+let input = document.getElementById("input");
 let submitForm = document.getElementById("removeButton");
 let reset = document.getElementById("resetBtn");
 let isLostPrior = false;
@@ -26,32 +27,62 @@ randomItems.forEach((item) =>
   DomSelectors.container.insertAdjacentHTML(
     "beforeend",
     `<div class = "card" id = "">
-<h1 class = "name" id = "${item.name}">Name: ${item.name}</h1>
-<img src="${item.imageUrl}" alt="">
-<h2 class = "${item.type}">Type: ${item.type}</h2>
-<h2 class = "${item.gender}">Gender: ${item.gender}</h2>
-<h2 class = "canBeFound" id = "${item.canBeFound}">Can be found: ${item.canBeFound}</h2>
-</div>`
+    <h1 class = "name" id = "${item.name}">Name: ${item.name}</h1>
+    <h2 class = "${item.type}">Type: ${item.type}</h2>
+    <h2 class = "${item.star}">Rarity: ${item.star}</h2>
+    <h2 class = "${item.weapon}">Weapon: ${item.weapon}</h2>
+    <h2 class = "${item.gender}">Gender: ${item.gender}</h2>
+    <h2 class = "canBeFound" id = "${item.canBeFound}">Can be found: ${item.canBeFound}</h2>
+    </div>`
   )
 );
-
+submitFormListen();
 function addResetListener() {
   reset.addEventListener("click", (event) => {
     event.preventDefault();
+    console.log(isLostPrior);
+    if (isLostPrior === true) {
+      console.log("Lost?", isLostPrior);
+
+      targetItem =
+        randomItems[Math.floor(Math.random() * randomItems.length)].name;
+
+      DomSelectors.won.textContent = "";
+      DomSelectors.form.insertAdjacentHTML(
+        "afterbegin",
+        `    <input type="text" id = "input" placeholder = "What are you removing?">
+    <button type="submit" id = "removeButton">Remove</button> `
+      );
+      input = document.getElementById("input");
+      submitForm = document.getElementById("removeButton");
+      submitFormListen();
+    }
+
     console.log("Reset button clicked!");
     DomSelectors.container.innerHTML = "";
     newItems = [...randomItems];
     numberOfMoves = 0;
+    DomSelectors.moves.textContent = `You took ${numberOfMoves} moves so far!`;
     targetItem =
       randomItems[Math.floor(Math.random() * randomItems.length)].name;
-
+    DomSelectors.won.textContent = "";
+    DomSelectors.task.textContent = `Get ${targetItem} remaining on your screen!`;
+    DomSelectors.form.insertAdjacentHTML(
+      "afterbegin",
+      `    <input type="text" id = "input" placeholder = "What are you removing?">
+  <button type="submit" id = "removeButton">Remove</button> `
+    );
+    input = document.getElementById("input");
+    submitForm = document.getElementById("removeButton");
+    submitFormListen();
     randomItems.forEach((item) =>
       DomSelectors.container.insertAdjacentHTML(
         "beforeend",
         `<div class = "card" id = "">
     <h1 class = "name" id = "${item.name}">Name: ${item.name}</h1>
-    <img src="${item.imageUrl}" alt="">
     <h2 class = "${item.type}">Type: ${item.type}</h2>
+    <h2 class = "${item.star}">Rarity: ${item.star}</h2>
+    <h2 class = "${item.weapon}">Weapon: ${item.weapon}</h2>
     <h2 class = "${item.gender}">Gender: ${item.gender}</h2>
     <h2 class = "canBeFound" id = "${item.canBeFound}">Can be found: ${item.canBeFound}</h2>
     </div>`
@@ -60,12 +91,14 @@ function addResetListener() {
   });
 }
 addResetListener();
-submitForm.addEventListener("click", (event) => {
-  event.preventDefault();
-  numberOfMoves++;
-  DomSelectors.moves.textContent = `You took ${numberOfMoves} moves so far!`;
-  checkItemsAlgorithm(input.value);
-});
+function submitFormListen() {
+  submitForm.addEventListener("click", (event) => {
+    event.preventDefault();
+    numberOfMoves++;
+    DomSelectors.moves.textContent = `You took ${numberOfMoves} moves so far!`;
+    checkItemsAlgorithm(input.value);
+  });
+}
 
 //algorithm = check each item and if something is different do something
 
@@ -83,6 +116,12 @@ function checkItemsAlgorithm(inputValue) {
     } else if (randomItems[i].canBeFound === inputValue) {
       console.log(input.value);
       inputNewItems(input.value);
+    } else if (randomItems[i].star === inputValue) {
+      console.log(input.value);
+      inputNewItems(input.value);
+    } else if (randomItems[i].weapon === inputValue) {
+      console.log(input.value);
+      inputNewItems(input.value);
     }
   }
 }
@@ -94,15 +133,20 @@ function inputNewItems(value) {
       item.name !== value &&
       item.gender !== value &&
       item.type !== value &&
-      item.canBeFound !== value
+      item.canBeFound !== value &&
+      item.star !== value &&
+      item.weapon !== value &&
+      item.imageUrl !== value
   );
+
   newItems.forEach((item) =>
     DomSelectors.container.insertAdjacentHTML(
       "beforeend",
       `<div class = "card" id = "">
     <h1 class = "name" id = "${item.name}">Name: ${item.name}</h1>
-    <img src="${item.imageUrl}" alt="">
     <h2 class = "${item.type}">Type: ${item.type}</h2>
+    <h2 class = "${item.star}">Rarity: ${item.star}</h2>
+    <h2 class = "${item.weapon}">Weapon: ${item.weapon}</h2>
     <h2 class = "${item.gender}">Gender: ${item.gender}</h2>
     <h2 class = "canBeFound" id = "${item.canBeFound}">Can be found: ${item.canBeFound}</h2>
     </div>`
@@ -112,6 +156,7 @@ function inputNewItems(value) {
 }
 
 function gotItem() {
+  console.log("gotItem function ran!");
   if (newItems[0].name === targetItem && newItems.length === 1) {
     console.log("WON!!!");
     input.remove();
@@ -119,11 +164,11 @@ function gotItem() {
     DomSelectors.moves.textContent = "";
     DomSelectors.won.textContent = `You won in ${numberOfMoves} moves! Want to try again?`;
   } else if (newItems.every((item) => item.name !== targetItem)) {
+    isLostPrior = true;
     console.log("ITEM LOST");
     input.remove();
     submitForm.remove();
     DomSelectors.moves.textContent = "";
     DomSelectors.won.textContent = `You lost in ${numberOfMoves} move(s)! Want to try again?`;
-    isLostPrior = true;
   }
 }
