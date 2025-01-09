@@ -1,4 +1,10 @@
-const apiUrl = "https://genshin.jmp.blue/characters/";
+async function getData() {
+  try {
+    if (responseTypes.status != 200) {
+      throw new Error(responseTypes);
+    }
+  } catch (error) {}
+}
 
 export const randomItems = [
   {
