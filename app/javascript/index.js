@@ -41,7 +41,7 @@ function addResetListener() {
   reset.addEventListener("click", (event) => {
     event.preventDefault();
     console.log(isLostPrior);
-    if (isLostPrior === true) {
+    if (!document.getElementById("input")) {
       console.log("Lost?", isLostPrior);
 
       targetItem =
@@ -57,7 +57,6 @@ function addResetListener() {
       submitForm = document.getElementById("removeButton");
       submitFormListen();
     }
-
     console.log("Reset button clicked!");
     DomSelectors.container.innerHTML = "";
     newItems = [...randomItems];
@@ -67,14 +66,6 @@ function addResetListener() {
       randomItems[Math.floor(Math.random() * randomItems.length)].name;
     DomSelectors.won.textContent = "";
     DomSelectors.task.textContent = `Get ${targetItem} remaining on your screen!`;
-    DomSelectors.form.insertAdjacentHTML(
-      "afterbegin",
-      `    <input type="text" id = "input" placeholder = "What are you removing?">
-  <button type="submit" id = "removeButton">Remove</button> `
-    );
-    input = document.getElementById("input");
-    submitForm = document.getElementById("removeButton");
-    submitFormListen();
     randomItems.forEach((item) =>
       DomSelectors.container.insertAdjacentHTML(
         "beforeend",
@@ -91,6 +82,7 @@ function addResetListener() {
   });
 }
 addResetListener();
+
 function submitFormListen() {
   submitForm.addEventListener("click", (event) => {
     event.preventDefault();
