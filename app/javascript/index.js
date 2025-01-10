@@ -44,9 +44,6 @@ function addResetListener() {
     if (!document.getElementById("input")) {
       console.log("Lost?", isLostPrior);
 
-      targetItem =
-        randomItems[Math.floor(Math.random() * randomItems.length)].name;
-
       DomSelectors.won.textContent = "";
       DomSelectors.form.insertAdjacentHTML(
         "afterbegin",
