@@ -86,8 +86,6 @@ function submitFormListen() {
   });
 }
 
-//algorithm = check each item and if something is different do something
-
 function checkItemsAlgorithm(inputValue) {
   for (let i = 0; i < randomItems.length; i++) {
     if (randomItems[i].name === inputValue) {
