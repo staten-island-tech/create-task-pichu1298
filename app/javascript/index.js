@@ -12,7 +12,6 @@ const DomSelectors = {
 let input = document.getElementById("input");
 let submitForm = document.getElementById("removeButton");
 let reset = document.getElementById("resetBtn");
-let isLostPrior = false;
 
 let targetItem =
   randomItems[Math.floor(Math.random() * randomItems.length)].name;
@@ -42,8 +41,6 @@ function addResetListener() {
     event.preventDefault();
     console.log(isLostPrior);
     if (!document.getElementById("input")) {
-      console.log("Lost?", isLostPrior);
-
       DomSelectors.won.textContent = "";
       DomSelectors.form.insertAdjacentHTML(
         "afterbegin",
