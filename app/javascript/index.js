@@ -39,7 +39,6 @@ submitFormListen();
 function addResetListener() {
   reset.addEventListener("click", (event) => {
     event.preventDefault();
-    console.log(isLostPrior);
     if (!document.getElementById("input")) {
       DomSelectors.won.textContent = "";
       DomSelectors.form.insertAdjacentHTML(
@@ -50,6 +49,7 @@ function addResetListener() {
       input = document.getElementById("input");
       submitForm = document.getElementById("removeButton");
       submitFormListen();
+      addResetListener();
     }
     console.log("Reset button clicked!");
     DomSelectors.container.innerHTML = "";
