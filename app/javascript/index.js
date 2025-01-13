@@ -147,14 +147,11 @@ function inputNewItems(value) {
 function gotItem() {
   console.log("gotItem function ran!");
   if (newItems[0].name === targetItem && newItems.length === 1) {
-    console.log("WON!!!");
     input.remove();
     submitForm.remove();
     DomSelectors.moves.textContent = "";
     DomSelectors.won.textContent = `You won in ${numberOfMoves} moves! Want to try again?`;
   } else if (newItems.every((item) => item.name !== targetItem)) {
-    isLostPrior = true;
-    console.log("ITEM LOST");
     input.remove();
     submitForm.remove();
     DomSelectors.moves.textContent = "";
